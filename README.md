@@ -3,7 +3,15 @@
 The ```wikiScraper``` package makes it easy to get and transform data from Wikipedia pages. The package uses ```rvest``` and ```xml2``` to get data from web pages, and ```tidyverse``` packages for transformation.
 
 ## Getting Started
-The following code creates a dataframe of all of the metro systems listed on the Wikipedia page [List of metro systems.](https://en.wikipedia.org/wiki/List_of_metro_systems)
+
+```wikiScraper``` is available via github. To install, use the ```devtools``` package.
+
+```r
+install.packages('devtools')
+devtools::install_github("niedermansam/wikiScraper")
+```
+
+When the installation is complete, load the ```wikiScraper``` package and you're ready to get started. The following code creates a dataframe of all of the metro systems listed on the Wikipedia page [List of metro systems.](https://en.wikipedia.org/wiki/List_of_metro_systems)
 
 ```r
 library(wikiScraper)
