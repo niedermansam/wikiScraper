@@ -1,0 +1,69 @@
+---
+title: "WikiScrapeR"
+author: "Samuel Supplee-Niederman"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{WikiScrapeR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(WikiScrapeR)
+library(magrittr)
+library(rvest)
+```
+
+# WikiScrapeR
+
+WikiScrapeR contains a number of functions to scrape and organize data from Wikipedia pages. This package is a wrapper around the packages ```rvest```, and ```stringr``` and offers a number of helper functions. Let's say we're curious about cities with metro systems, and we found [https://en.wikipedia.org/wiki/List_of_metro_systems](this page) on Wikipedia, with this table:
+
+![List of Metro Systems from Wikipedia](metro_systems_list.png){width=100%}
+
+## Getting a Table from Wikipedia
+
+Getting the data for this table takes a single line of code:
+
+```{r}
+metro_table <- ws_get_table('List_of_metro_systems') # Get the first table from the Wikipedia article.
+metro_table
+```
+
+Because this table is the first table of the page, and there is no strange formatting (titles, multi-row headers, etc.). By default, any string that does not contain a forward slash is appended to the end of the url ```"https://wikipedia.org/wiki/"```. In ```ws_get_table```,```ws_get_page```, and ```ws_get_section``` passing "New_York_City" is equivelant to passing "https://wikipedia.org/wiki/New_York_City". ```ws_get_page``` also replaces any spaces with underscores, so passing the arguement "New York City" is valid for this function.
+
+```{r}
+new_york <- ws_get_page("New York City") # Get Wikipedia page for New York City
+ny_card <- ws_get_card(new_york) # Get info card
+ny_card %>% head()
+```
+
+### Dealing with Big Pages and Complex Tables
+
+But what about a more complicate case? Using the ```rvest``` package, as of writing there are 30 different tables in New York City's Wikipedia page.
+
+```{r echo=TRUE, eval=FALSE}
+new_york %>% rvest::html_nodes("table") # Outputs a nodeset of length 30
+```
+
+If you find a table you want in a long article, you can get select a section of that article. For example, let's say I want this table in the section titled "Boroughs."
+
+![Table with Data about New York City's Boroughs from Wikipedia](nyc_boroughs.png){width=100%}
+
+```{r}
+boroughs_section <- new_york %>% ws_get_section("Boroughs") # get the section with the id "#Boroughs"
+boroughs_section %>% ws_get_table(skip=1, header_length = 2)
+```
+
+To get this table, we need to pass the arguments ```skip=1``` to ignore the first row that serves as a title, and ```header_length=2``` to get necessary information from both the 2nd and 3rd rows of data for our header. ```ws_get_tables``` automatically concatinates subcategories to parent categories in the header.
+
+
+
+

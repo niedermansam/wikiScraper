@@ -1,0 +1,24 @@
+Package: wikiScraper
+Title: Scraping and formatting information from Wikipedia pages.
+Version: 0.0.1
+Authors@R: 
+    person(given = "Sam",
+           family = "Supplee-Niederman",
+           role = c("aut", "cre"),
+           email = "niederman.sam@gmail.com")
+Description: A series of wrapper functions around the rvest package
+    to retrieve data from Wikipedia pages.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports:
+    rvest,
+    xml2,
+    tidyverse,
+    sjmisc,
+    magrittr
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
