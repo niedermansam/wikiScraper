@@ -2,20 +2,42 @@
 #'
 #' @description A function to extract a table from a Wikipedia page.
 #'
-#' @param page Either the url of a Wikipedia, or an object that contains a Wikipedia page
-#' @param table_num The index of the table to get data from, defaults to 1 (first table)
-#' @param skip The number of rows to skip before collecting data. This is useful for omitting full-width "title" cells.
-#'     Takes an integery and defaults to 0.
-#' @param header_length set to a number greater than one to deal with multi-row headers. Takes an integer and defaults to 1.
-#' @param exclude_brackets Whether to exclude brackets and their contents in output. Takes a boolean and defaults to TRUE.
-#' @param exclude_parens Whether to exclude parenthesis and their contents in output. Takes a boolean and defaults to FALSE
-#' @return data_frame
 #'
-#' @examples ws_get_table("https://en.wikipedia.org/wiki/List_of_metro_systems")
+#'
+#' @param page Either the url of a Wikipedia, or an object that contains a Wikipedia page
+#'
+#' @param table_num The index of the table to get data from, defaults to 1 (first table)
+#'
+#' @param skip The number of rows to skip before collecting data. This is useful for omitting
+#'     full-width "title" cells. Takes an integery and defaults to 0.
+#'
+#' @param header_length Set to a number greater than one to deal with multi-row headers.
+#'     Takes an integer and defaults to 1.
+#'
+#' @param col_names Optional argument that takes a character vector to name columns in
+#'     the output table.
+#'
+#' @param exclude_brackets Whether to exclude brackets and their contents in output.
+#'     Takes a boolean and defaults to TRUE.
+#'
+#' @param exclude_parens Whether to exclude parenthesis and their contents in output.
+#'     Takes a boolean and defaults to FALSE
+#'
+#'
+#'
+#'
+#' @return Returns a data_frame (tibble) that contains the data from the table
+#'     specified by table_num
+#'
+#'
+#'
+#' @examples
+#' ws_get_table("https://en.wikipedia.org/wiki/List_of_metro_systems")
+#' ws_get_table("List_of_metro_systems")
 #'
 #' @export
 ws_get_table <-
-  function(page, table_num = 1, skip = 0, header_length = 1, exclude_brackets = TRUE, exclude_parens = FALSE, format = NULL) {
+  function(page, table_num = 1, skip = 0, header_length = 1, col_names = NULL, exclude_brackets = TRUE, exclude_parens = FALSE, format = NULL) {
 
     #ny = ws_scrape_page("New_York_City")
     #page = ny %>% ws_scrape_section("Demographics")
@@ -57,6 +79,7 @@ ws_get_table <-
 
 
   # Get header data
+  if(is.null(col_names)){
   header <- NA
   for(row in pointer:header_end){
 
@@ -111,6 +134,7 @@ ws_get_table <-
     pointer = pointer + 1
   }
 
+
   # Exclude brackets from header if exclude_brackets == T
   if(exclude_brackets) header <- header %>%
     stringr::str_remove_all("\\[.*\\]")
@@ -119,6 +143,9 @@ ws_get_table <-
   if(exclude_parens) header <- header %>%
     stringr::str_remove_all("\\(.*\\)") %>%
     stringr::str_trim()
+  } else {
+    header=col_names
+  }
 
 
   # create output dataframe
