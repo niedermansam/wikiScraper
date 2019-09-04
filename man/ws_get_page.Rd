@@ -4,19 +4,25 @@
 \alias{ws_get_page}
 \title{Get HTML from Wikipedia Page}
 \usage{
-ws_get_page(page, url = "https://en.wikipedia.org/wiki/")
+ws_get_page(page, url = "https://en.wikipedia.org/wiki/", delay = 1)
 }
 \arguments{
 \item{page}{Extension of the page, e.g. "New_York_City"}
 
 \item{url}{The base url of the site to visit, defaults to "https://en.wikipedia.org/wiki/"}
+
+\item{delay}{Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+to 0. Time between calls is determined by multiplying the value of this parameter with
+the response time by the server.}
 }
 \description{
 A helper function to extract a table from a Wikipedia page.
 }
 \examples{
-ws_get_page("New_York_City")
+ws_get_page("New York City")
 # is equivelant to
 ws_get_page("https://en.wikipedia.org/wiki/New_York_City")
+# and
+#xml2::read_html("https://en.wikipedia.org/wiki/New_York_City")
 
 }
