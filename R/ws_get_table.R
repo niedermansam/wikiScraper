@@ -6,7 +6,8 @@
 #'
 #' @param page Either the url of a Wikipedia, or an object that contains a Wikipedia page
 #'
-#' @param table_num The index of the table to get data from, defaults to 1 (first table)
+#' @param table An integer that specifies which table to get data from. Defaults to 1,
+#'     which retrieves the first table element in the HTML object or web page passed.
 #'
 #' @param skip The number of rows to skip before collecting data. This is useful for omitting
 #'     full-width "title" cells. Takes an integery and defaults to 0.
@@ -23,27 +24,34 @@
 #' @param exclude_parens Whether to exclude parenthesis and their contents in output.
 #'     Takes a boolean and defaults to FALSE
 #'
-#' @param delay Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+#' @param delay Rate at which to throttle calls. There is no delay if the function is passed an HTML object
+#'     (e.g. from ws_get_page). Defaults to 1, can be turned off by setting
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
 #'     the response time by the server.
 #'
 #'
 #' @return Returns a data_frame (tibble) that contains the data from the table
-#'     specified by table_num
-#'
+#'     specified by the table argument.
 #'
 #'
 #' @examples
 #' ws_get_table("https://en.wikipedia.org/wiki/List_of_metro_systems")
 #' ws_get_table("List_of_metro_systems")
 #'
-#' @export
-ws_get_table <-
-  function(page, table_num = 1, skip = 0, header_length = 1, col_names = NULL, exclude_brackets = TRUE, exclude_parens = FALSE, format = NULL, delay = 1) {
+#' @export ws_get_table
+ws_get_table <- function(page,
+                         table = 1,
+                         skip = 0,
+                         header_length = 1,
+                         col_names = NULL,
+                         exclude_brackets = TRUE,
+                         exclude_parens = FALSE,
+                         format = NULL,
+                         delay = 1) {
 
     #ny = ws_scrape_page("New_York_City")
     #page = ny %>% ws_scrape_section("Demographics")
-    #table_num = 3
+    #table = 3
     #header_start= 2
     #header_length = 2
     #title = 0
@@ -93,7 +101,7 @@ ws_get_table <-
   #     }
 
   # Get specified table (defaults to first table)
-  site_html <- site_html[table_num]
+  site_html <- site_html[table]
 
 
   # Get header data

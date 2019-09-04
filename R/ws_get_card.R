@@ -7,9 +7,13 @@
 #'
 #' @param format Either 'long' or 'wide'. 'long' returns an output with two columns (header and data), 'wide' returns an output with a column for each data entry.
 #'
-#' @param delay Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+#' @param delay Rate at which to throttle calls. There is no delay if the function is passed an HTML object
+#'     (e.g. from ws_get_page). Defaults to 1, can be turned off by setting
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
 #'     the response time by the server.
+#'
+#' @return Returns a data_frame (tibble) that contains the data from a table with the class "infobox".
+#'
 #'
 #' @examples ws_get_card("wiki/New_York_City")
 #'

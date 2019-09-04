@@ -4,14 +4,15 @@
 \alias{ws_get_table}
 \title{Scrape a Table from Wikipedia Page}
 \usage{
-ws_get_table(page, table_num = 1, skip = 0, header_length = 1,
+ws_get_table(page, table = 1, skip = 0, header_length = 1,
   col_names = NULL, exclude_brackets = TRUE, exclude_parens = FALSE,
   format = NULL, delay = 1)
 }
 \arguments{
 \item{page}{Either the url of a Wikipedia, or an object that contains a Wikipedia page}
 
-\item{table_num}{The index of the table to get data from, defaults to 1 (first table)}
+\item{table}{An integer that specifies which table to get data from. Defaults to 1,
+which retrieves the first table element in the HTML object or web page passed.}
 
 \item{skip}{The number of rows to skip before collecting data. This is useful for omitting
 full-width "title" cells. Takes an integery and defaults to 0.}
@@ -28,13 +29,14 @@ Takes a boolean and defaults to TRUE.}
 \item{exclude_parens}{Whether to exclude parenthesis and their contents in output.
 Takes a boolean and defaults to FALSE}
 
-\item{delay}{Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+\item{delay}{Rate at which to throttle calls. There is no delay if the function is passed an HTML object
+(e.g. from ws_get_page). Defaults to 1, can be turned off by setting
 to 0. Time between calls is determined by multiplying the value of this parameter with
 the response time by the server.}
 }
 \value{
 Returns a data_frame (tibble) that contains the data from the table
-    specified by table_num
+    specified by the table argument.
 }
 \description{
 A function to extract a table from a Wikipedia page.

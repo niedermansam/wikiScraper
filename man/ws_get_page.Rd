@@ -15,6 +15,9 @@ ws_get_page(page, url = "https://en.wikipedia.org/wiki/", delay = 1)
 to 0. Time between calls is determined by multiplying the value of this parameter with
 the response time by the server.}
 }
+\value{
+An object that contains the HTML content of the requested URL.
+}
 \description{
 A helper function to extract a table from a Wikipedia page.
 }

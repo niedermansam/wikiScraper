@@ -16,9 +16,12 @@ coordinates column.}
 that contains the coordiantes to parse. If missing, the function will look for
 columns named "coords" or "coordinates".}
 }
+\value{
+Returns a the dataframe passed in the argument data, with columns "lat" and "lon"
+    appended. By default, the original "coordinates" column is deleted.
+}
 \description{
 A helper function to parse Wikipedia-style geographic coordinates.
-    Returns a dataframe with columns "lat" and "lon".
 }
 \examples{
 ws_get_table("List_of_metro_systems") \%>\% ws_tidy_names()

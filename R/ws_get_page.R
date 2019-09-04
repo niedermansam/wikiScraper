@@ -11,6 +11,7 @@
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
 #'     the response time by the server.
 #'
+#' @return An object that contains the HTML content of the requested URL.
 #'
 #' @examples ws_get_page("New York City")
 #'# is equivelant to

@@ -1,7 +1,6 @@
 #' @title Get Lat/Long Coordinates from Wikipedia Page
 #'
 #' @description A helper function to parse Wikipedia-style geographic coordinates.
-#'     Returns a dataframe with columns "lat" and "lon".
 #'
 #'
 #' @param data A data frame that contains a column of coordinates from Wikipedia.
@@ -11,7 +10,8 @@
 #' @param delete_coords Boolean value that indicates whether to remove the original
 #'     coordinates column.
 #'
-#'
+#' @return Returns a the dataframe passed in the argument data, with columns "lat" and "lon"
+#'     appended. By default, the original "coordinates" column is deleted.
 #'
 #' @examples ws_get_table("List_of_metro_systems") %>% ws_tidy_names()
 #'
