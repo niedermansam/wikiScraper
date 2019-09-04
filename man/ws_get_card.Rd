@@ -4,10 +4,14 @@
 \alias{ws_get_card}
 \title{Get Data from Wikipedia Card}
 \usage{
-ws_get_card(page, format = "long")
+ws_get_card(page, format = "long", delay = 1)
 }
 \arguments{
 \item{format}{Either 'long' or 'wide'. 'long' returns an output with two columns (header and data), 'wide' returns an output with a column for each data entry.}
+
+\item{delay}{Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+to 0. Time between calls is determined by multiplying the value of this parameter with
+the response time by the server.}
 
 \item{html}{Either a url to a wikipediea page, or an object that contains the body of a wikipedia page (e.g. from ws_scrape_page).}
 }

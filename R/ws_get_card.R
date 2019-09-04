@@ -4,8 +4,12 @@
 #'
 #'
 #' @param html Either a url to a wikipediea page, or an object that contains the body of a wikipedia page (e.g. from ws_scrape_page).
+#'
 #' @param format Either 'long' or 'wide'. 'long' returns an output with two columns (header and data), 'wide' returns an output with a column for each data entry.
 #'
+#' @param delay Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+#'     to 0. Time between calls is determined by multiplying the value of this parameter with
+#'     the response time by the server.
 #'
 #' @examples ws_get_card("wiki/New_York_City")
 #'
@@ -21,13 +25,10 @@
 #' @export ws_get_card
 
 ws_get_card <-
-  function(page, format="long"){
+  function(page, format="long", delay=1){
 
-    if(is.character(page)) {
-      site_html <- xml2::read_html(page) %>%
-        rvest::html_nodes("table")
-
-      }else site_html <- page
+    site_html <- wikiScraper::ws_get_page(page, delay = delay) %>%
+      rvest::html_nodes("table")
 
     rows <- site_html %>%
       rvest::html_nodes(".infobox") %>%

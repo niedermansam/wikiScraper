@@ -4,12 +4,17 @@
 \alias{ws_get_section}
 \title{Get a Section from a Wikipedia Page}
 \usage{
-ws_get_section(page, section)
+ws_get_section(page, section, delay = 1)
 }
 \arguments{
 \item{page}{Either a url to a wikipediea page, or an object that contains the body of a wikipedia page (e.g. from ws_scrape_page).}
 
 \item{section}{The header or css id of the section to retrieve}
+
+\item{delay}{Rate at which to throttle calls. There is no delay if the function is passed an HTML object
+(e.g. from ws_get_page). Defaults to 1, delay can be turned off by setting this value
+to 0. Time between calls is determined by multiplying the value of this parameter with
+the server's response time.}
 }
 \description{
 Returns an HTML object that contains the requested section of the web page.

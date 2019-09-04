@@ -5,29 +5,42 @@
 \title{Scrape a Table from Wikipedia Page}
 \usage{
 ws_get_table(page, table_num = 1, skip = 0, header_length = 1,
-  exclude_brackets = TRUE, exclude_parens = FALSE, format = NULL)
+  col_names = NULL, exclude_brackets = TRUE, exclude_parens = FALSE,
+  format = NULL, delay = 1)
 }
 \arguments{
 \item{page}{Either the url of a Wikipedia, or an object that contains a Wikipedia page}
 
 \item{table_num}{The index of the table to get data from, defaults to 1 (first table)}
 
-\item{skip}{The number of rows to skip before collecting data. This is useful for omitting full-width "title" cells.
-Takes an integery and defaults to 0.}
+\item{skip}{The number of rows to skip before collecting data. This is useful for omitting
+full-width "title" cells. Takes an integery and defaults to 0.}
 
-\item{header_length}{set to a number greater than one to deal with multi-row headers. Takes an integer and defaults to 1.}
+\item{header_length}{Set to a number greater than one to deal with multi-row headers.
+Takes an integer and defaults to 1.}
 
-\item{exclude_brackets}{Whether to exclude brackets and their contents in output. Takes a boolean and defaults to TRUE.}
+\item{col_names}{Optional argument that takes a character vector to name columns in
+the output table.}
 
-\item{exclude_parens}{Whether to exclude parenthesis and their contents in output. Takes a boolean and defaults to FALSE}
+\item{exclude_brackets}{Whether to exclude brackets and their contents in output.
+Takes a boolean and defaults to TRUE.}
+
+\item{exclude_parens}{Whether to exclude parenthesis and their contents in output.
+Takes a boolean and defaults to FALSE}
+
+\item{delay}{Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+to 0. Time between calls is determined by multiplying the value of this parameter with
+the response time by the server.}
 }
 \value{
-data_frame
+Returns a data_frame (tibble) that contains the data from the table
+    specified by table_num
 }
 \description{
 A function to extract a table from a Wikipedia page.
 }
 \examples{
 ws_get_table("https://en.wikipedia.org/wiki/List_of_metro_systems")
+ws_get_table("List_of_metro_systems")
 
 }

@@ -23,7 +23,9 @@
 #' @param exclude_parens Whether to exclude parenthesis and their contents in output.
 #'     Takes a boolean and defaults to FALSE
 #'
-#'
+#' @param delay Rate at which to throttle calls. Defaults to 1, can be turned off by setting
+#'     to 0. Time between calls is determined by multiplying the value of this parameter with
+#'     the response time by the server.
 #'
 #'
 #' @return Returns a data_frame (tibble) that contains the data from the table
@@ -37,7 +39,7 @@
 #'
 #' @export
 ws_get_table <-
-  function(page, table_num = 1, skip = 0, header_length = 1, col_names = NULL, exclude_brackets = TRUE, exclude_parens = FALSE, format = NULL) {
+  function(page, table_num = 1, skip = 0, header_length = 1, col_names = NULL, exclude_brackets = TRUE, exclude_parens = FALSE, format = NULL, delay = 1) {
 
     #ny = ws_scrape_page("New_York_City")
     #page = ny %>% ws_scrape_section("Demographics")
@@ -54,25 +56,41 @@ ws_get_table <-
 
 
   # Get HTML Tables
-  if(is.character(page) && stringr::str_detect(page,"\\/")) {
-    # Read html page requested
-    # If a forward slash is detected, "page" is passed to read_html unchanged
-    site_html <-
-      xml2::read_html(page) %>%
-      rvest::html_nodes("table")
+  site_html <- wikiScraper::ws_get_page(page, delay = delay) %>%
+    rvest::html_nodes("table")
 
-  } else if(is.character(page)){
-    # If no forward slash is detected, append the page to the end of the url for Wikipedia
-    url <- paste0("https://wikipedia.org/wiki/",page)
-    site_html <-
-      xml2::read_html(url) %>%
-      rvest::html_nodes("table")
-
-  } else {
-    # If the object passed is not a string, just extract the tables
-      site_html <- page %>%
-        rvest::html_nodes("table")
-      }
+  # if(is.character(page) && stringr::str_detect(page,"\\/")) {
+  #   # Read html page requested
+  #   # If a forward slash is detected, "page" is passed to read_html unchanged
+  #   t0 <- Sys.time()
+  #   site_html <-
+  #     xml2::read_html(page) %>%
+  #     rvest::html_nodes("table")
+  #   t1 <- Sys.time()
+  #
+  #   response_delay <- as.numeric(t1-t0)
+  #   Sys.sleep(throttle*response_delay)
+  #
+  #
+  # } else if(is.character(page)){
+  #   # If no forward slash is detected, append the page to the end of the url for Wikipedia
+  #   url <- paste0("https://wikipedia.org/wiki/",page)
+  #
+  #   t0 <- Sys.time()
+  #   site_html <-
+  #     xml2::read_html(url) %>%
+  #     rvest::html_nodes("table")
+  #   t1 <- Sys.time()
+  #
+  #   response_delay <- as.numeric(t1-t0)
+  #   Sys.sleep(throttle*response_delay)
+  #
+  #
+  # } else {
+  #   # If the object passed is not a string, just extract the tables
+  #     site_html <- page %>%
+  #       rvest::html_nodes("table")
+  #     }
 
   # Get specified table (defaults to first table)
   site_html <- site_html[table_num]
@@ -134,7 +152,6 @@ ws_get_table <-
     pointer = pointer + 1
   }
 
-
   # Exclude brackets from header if exclude_brackets == T
   if(exclude_brackets) header <- header %>%
     stringr::str_remove_all("\\[.*\\]")
@@ -143,8 +160,9 @@ ws_get_table <-
   if(exclude_parens) header <- header %>%
     stringr::str_remove_all("\\(.*\\)") %>%
     stringr::str_trim()
-  } else {
+  } else { # handle manual column names
     header=col_names
+
   }
 
 
