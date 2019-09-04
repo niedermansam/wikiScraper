@@ -30,12 +30,12 @@
 #'     the response time by the server.
 #'
 #'
-#' @return Returns a data_frame (tibble) that contains the data from the table
+#' @return Returns a dataframe (tibble) that contains the data from the table
 #'     specified by the table argument.
 #'
 #'
 #' @examples
-#' ws_get_table("https://en.wikipedia.org/wiki/List_of_metro_systems")
+#' ws_get_table("https://wikipedia.org/wiki/List_of_metro_systems")
 #' ws_get_table("List_of_metro_systems")
 #'
 #' @export ws_get_table
@@ -63,7 +63,7 @@ ws_get_table <- function(page,
   header_end = skip + header_length
 
 
-  # Get HTML Tables
+  # Get HTML Tables #######
   site_html <- wikiScraper::ws_get_page(page, delay = delay) %>%
     rvest::html_nodes("table")
 
@@ -104,7 +104,7 @@ ws_get_table <- function(page,
   site_html <- site_html[table]
 
 
-  # Get header data
+  # Get header data ########
   if(is.null(col_names)){
   header <- NA
   for(row in pointer:header_end){
@@ -174,7 +174,7 @@ ws_get_table <- function(page,
   }
 
 
-  # create output dataframe
+  # create output dataframe #######
   final <- data.frame(matrix(ncol = length(header), nrow = 0))
   colnames(final) <- header
   final <- final %>% tibble::as_tibble()
@@ -185,6 +185,7 @@ ws_get_table <- function(page,
   # set a variable to keep track of our index
   df_index <- 1
 
+  # Get body data ###########
   # loop through table and append children
   for(row_index in pointer:table_length){
 
@@ -234,7 +235,7 @@ ws_get_table <- function(page,
   }
 
 
-  # Handle formatting
+  # Handle formatting ######
   if(!is.null(format)){
     if(length(final) > length(format)){
       missing_formats <- length(final) - length(format)
@@ -263,62 +264,3 @@ ws_get_table <- function(page,
   return(final)
   }
 
-# handle_header <- function(header_html){
-#   header <- NA
-#
-#
-#   # create output dataframe
-#   final <- data.frame(matrix(ncol = length(header), nrow = 0))
-#   colnames(final) <- header
-#   final <- final %>% tibble::as_tibble()
-#
-#   # loop through table and append children
-#   for(row_index in 1:length(header_html)){
-#
-#     # construct selector for HTML row
-#     node <- header_html[row_index]
-#
-#
-#     row_data <- header_html[row_index] %>%
-#       rvest::html_nodes("th, td")
-#
-#     # get a vector of cells in that row
-#     row_text <- row_data %>%
-#       rvest::html_text(trim=T)
-#
-#     col_widths <- row_data %>%
-#       rvest::html_attr('colspan') %>%
-#       tidyr::replace_na(1) %>%
-#       as.integer()
-#
-#     if(max(as.integer(col_widths)) == length(header)){
-#       next;
-#     }
-#
-#     if(max(col_widths) > 1) {
-#       for(col in 1:length(col_widths)){
-#         if(col_widths[col] > 1){
-#           to_append <- rep(row_text[col], col_widths[col] - 1)
-#           row_text <- row_text %>% append(to_append, col)
-#         }
-#       }
-#     }
-#
-#     #if(exclude_brackets) row_text <- row_text %>% stringr::str_remove_all("\\[.*\\]")
-#     #if(exclude_parens) row_text <- row_text %>% stringr::str_remove_all("\\(.*\\)") %>% stringr::str_trim()
-#
-#     # handle Wikipedia table formatting (sometimes, 1 cell spans multiple row)
-#     if(length(row_text) < ncol(final)){
-#       missing_cols = ncol(final) - length(row_data)
-#       prev_row <- unname(unlist(final[nrow(final),] ))
-#       row_text <- append(row_text, prev_row[1:missing_cols], 0)
-#     }
-#
-#     # Append row data to ouput object and go to next row
-#     final[df_index,] <- row_text
-#     df_index = df_index + 1
-#   }
-#   return(header_format)
-# }
-# handle_header(beijing_header)
-# handle_header(ny_header)

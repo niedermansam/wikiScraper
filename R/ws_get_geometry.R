@@ -6,12 +6,12 @@
 #' @param data A data frame that contains a column of coordinates from Wikipedia.
 #' @param coordinates A character object that contains the name of the column
 #'     that contains the coordiantes to parse. If missing, the function will look for
-#'     columns named "coords" or "coordinates".
+#'     columns named \code{coords} or \code{coordinates}.
 #' @param delete_coords Boolean value that indicates whether to remove the original
 #'     coordinates column.
 #'
-#' @return Returns a the dataframe passed in the argument data, with columns "lat" and "lon"
-#'     appended. By default, the original "coordinates" column is deleted.
+#' @return Returns a the dataframe passed in the argument data, with columns \code{lat}
+#'     and \code{lon} appended. By default, the original \code{coordinates} column is deleted.
 #'
 #' @examples ws_get_table("List_of_metro_systems") %>% ws_tidy_names()
 #'

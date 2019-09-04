@@ -14,11 +14,11 @@ coordinates column.}
 
 \item{coordinates}{A character object that contains the name of the column
 that contains the coordiantes to parse. If missing, the function will look for
-columns named "coords" or "coordinates".}
+columns named \code{coords} or \code{coordinates}.}
 }
 \value{
-Returns a the dataframe passed in the argument data, with columns "lat" and "lon"
-    appended. By default, the original "coordinates" column is deleted.
+Returns a the dataframe passed in the argument data, with columns \code{lat}
+    and \code{lon} appended. By default, the original \code{coordinates} column is deleted.
 }
 \description{
 A helper function to parse Wikipedia-style geographic coordinates.

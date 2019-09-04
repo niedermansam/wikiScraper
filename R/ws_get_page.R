@@ -1,11 +1,13 @@
 #' @title Get HTML from Wikipedia Page
 #'
-#' @description A helper function to extract a table from a Wikipedia page.
+#' @description Returns a list containing the contents of the requested webpage. Useful in
+#'     conjunction with [ws_get_table()], [ws_get_card()], and [ws_get_section()]. This function
+#'     is a wrapper around the function [xml2::get_html()].
 #'
 #'
 #' @param page Extension of the page, e.g. "New_York_City"
 #'
-#' @param url The base url of the site to visit, defaults to "https://en.wikipedia.org/wiki/"
+#' @param url The base url of the site to visit, defaults to "https://wikipedia.org/wiki/"
 #'
 #' @param delay Rate at which to throttle calls. Defaults to 1, can be turned off by setting
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
@@ -15,13 +17,13 @@
 #'
 #' @examples ws_get_page("New York City")
 #'# is equivelant to
-#'ws_get_page("https://en.wikipedia.org/wiki/New_York_City")
+#'ws_get_page("https://wikipedia.org/wiki/New_York_City")
 #'# and
-#'#xml2::read_html("https://en.wikipedia.org/wiki/New_York_City")
+#'#xml2::read_html("https://wikipedia.org/wiki/New_York_City")
 #'
 #' @export
 ws_get_page <-
-  function(page, url = "https://en.wikipedia.org/wiki/", delay = 1){
+  function(page, url = "https://wikipedia.org/wiki/", delay = 1){
 
     if(typeof(page) == "list"){
       return(page)

@@ -4,12 +4,12 @@
 \alias{ws_get_page}
 \title{Get HTML from Wikipedia Page}
 \usage{
-ws_get_page(page, url = "https://en.wikipedia.org/wiki/", delay = 1)
+ws_get_page(page, url = "https://wikipedia.org/wiki/", delay = 1)
 }
 \arguments{
 \item{page}{Extension of the page, e.g. "New_York_City"}
 
-\item{url}{The base url of the site to visit, defaults to "https://en.wikipedia.org/wiki/"}
+\item{url}{The base url of the site to visit, defaults to "https://wikipedia.org/wiki/"}
 
 \item{delay}{Rate at which to throttle calls. Defaults to 1, can be turned off by setting
 to 0. Time between calls is determined by multiplying the value of this parameter with
@@ -19,13 +19,15 @@ the response time by the server.}
 An object that contains the HTML content of the requested URL.
 }
 \description{
-A helper function to extract a table from a Wikipedia page.
+Returns a list containing the contents of the requested webpage. Useful in
+    conjunction with [ws_get_table()], [ws_get_card()], and [ws_get_section()]. This function
+    is a wrapper around the function [xml2::get_html()].
 }
 \examples{
 ws_get_page("New York City")
 # is equivelant to
-ws_get_page("https://en.wikipedia.org/wiki/New_York_City")
+ws_get_page("https://wikipedia.org/wiki/New_York_City")
 # and
-#xml2::read_html("https://en.wikipedia.org/wiki/New_York_City")
+#xml2::read_html("https://wikipedia.org/wiki/New_York_City")
 
 }

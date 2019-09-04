@@ -1,6 +1,7 @@
 #' @title Get a Section from a Wikipedia Page
 #'
 #' @description Returns an HTML object that contains the requested section of the web page.
+#'     Useful for getting a section of a long Wikipedia page to pass to [ws_get_table()].
 #'
 #'
 #' @param page Either a url to a wikipediea page, or an object that contains the body of a wikipedia page (e.g. from ws_scrape_page).
@@ -12,9 +13,11 @@
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
 #'     the server's response time.
 #'
+#' @return Returns an HTML object that contains the requested section of the web page.
+#'
 #' @examples ws_get_page("List_of_metro_systems")
 #'# is equivelant to
-#'ws_get_page("https://en.wikipedia.org/wiki/List_of_metro_systems")
+#'ws_get_page("https://wikipedia.org/wiki/List_of_metro_systems")
 #'
 #' @export
 ws_get_section <-

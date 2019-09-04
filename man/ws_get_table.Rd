@@ -35,14 +35,14 @@ to 0. Time between calls is determined by multiplying the value of this paramete
 the response time by the server.}
 }
 \value{
-Returns a data_frame (tibble) that contains the data from the table
+Returns a dataframe (tibble) that contains the data from the table
     specified by the table argument.
 }
 \description{
 A function to extract a table from a Wikipedia page.
 }
 \examples{
-ws_get_table("https://en.wikipedia.org/wiki/List_of_metro_systems")
+ws_get_table("https://wikipedia.org/wiki/List_of_metro_systems")
 ws_get_table("List_of_metro_systems")
 
 }

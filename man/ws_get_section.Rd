@@ -16,12 +16,16 @@ ws_get_section(page, section, delay = 1)
 to 0. Time between calls is determined by multiplying the value of this parameter with
 the server's response time.}
 }
+\value{
+Returns an HTML object that contains the requested section of the web page.
+}
 \description{
 Returns an HTML object that contains the requested section of the web page.
+    Useful for getting a section of a long Wikipedia page to pass to [ws_get_table()].
 }
 \examples{
 ws_get_page("List_of_metro_systems")
 # is equivelant to
-ws_get_page("https://en.wikipedia.org/wiki/List_of_metro_systems")
+ws_get_page("https://wikipedia.org/wiki/List_of_metro_systems")
 
 }
