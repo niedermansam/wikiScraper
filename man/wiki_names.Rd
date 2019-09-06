@@ -32,6 +32,6 @@ Order of Operations: 1) replace punctuation and spaces with underscores, 2) rena
     3) replace_all, 4) remove, 5) to lowercase. This could impact the results of the function.
 }
 \examples{
-ws_get_table("List_of_metro_systems") \%>\% ws_tidy_names()
+wiki_table("List_of_metro_systems") \%>\% ws_tidy_names()
 
 }

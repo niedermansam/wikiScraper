@@ -25,7 +25,7 @@
 #'     Takes a boolean and defaults to FALSE
 #'
 #' @param delay Rate at which to throttle calls. There is no delay if the function is passed an HTML object
-#'     (e.g. from ws_get_page). Defaults to 1, can be turned off by setting
+#'     (e.g. from wiki_page). Defaults to 1, can be turned off by setting
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
 #'     the response time by the server.
 #'
@@ -35,11 +35,11 @@
 #'
 #'
 #' @examples
-#' ws_get_table("https://wikipedia.org/wiki/List_of_metro_systems")
-#' ws_get_table("List_of_metro_systems")
+#' wiki_table("https://wikipedia.org/wiki/List_of_metro_systems")
+#' wiki_table("List_of_metro_systems")
 #'
-#' @export ws_get_table
-ws_get_table <- function(page,
+#' @export wiki_table
+wiki_table <- function(page,
                          table = 1,
                          skip = 0,
                          header_length = 1,
@@ -64,7 +64,7 @@ ws_get_table <- function(page,
 
 
   # Get HTML Tables #######
-  site_html <- wikiScraper::ws_get_page(page, delay = delay) %>%
+  site_html <- wikiScraper::wiki_page(page, delay = delay) %>%
     rvest::html_nodes("table")
 
   # if(is.character(page) && stringr::str_detect(page,"\\/")) {
@@ -263,4 +263,3 @@ ws_get_table <- function(page,
 
   return(final)
   }
-

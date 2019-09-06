@@ -33,15 +33,15 @@ WikiScrapeR contains a number of functions to scrape and organize data from Wiki
 Getting the data for this table takes a single line of code:
 
 ```{r}
-metro_table <- ws_get_table('List_of_metro_systems') # Get the first table from the Wikipedia article.
+metro_table <- wiki_table('List_of_metro_systems') # Get the first table from the Wikipedia article.
 metro_table
 ```
 
-Because this table is the first table of the page, and there is no strange formatting (titles, multi-row headers, etc.). By default, any string that does not contain a forward slash is appended to the end of the url ```"https://wikipedia.org/wiki/"```. In ```ws_get_table```,```ws_get_page```, and ```ws_get_section``` passing "New_York_City" is equivelant to passing "https://wikipedia.org/wiki/New_York_City". ```ws_get_page``` also replaces any spaces with underscores, so passing the arguement "New York City" is valid for this function.
+Because this table is the first table of the page, and there is no strange formatting (titles, multi-row headers, etc.). By default, any string that does not contain a forward slash is appended to the end of the url ```"https://wikipedia.org/wiki/"```. In ```wiki_table```,```wiki_page```, and ```wiki_section``` passing "New_York_City" is equivelant to passing "https://wikipedia.org/wiki/New_York_City". ```wiki_page``` also replaces any spaces with underscores, so passing the arguement "New York City" is valid for this function.
 
 ```{r}
-new_york <- ws_get_page("New York City") # Get Wikipedia page for New York City
-ny_card <- ws_get_card(new_york) # Get info card
+new_york <- wiki_page("New York City") # Get Wikipedia page for New York City
+ny_card <- wiki_card(new_york) # Get info card
 ny_card %>% head()
 ```
 
@@ -58,11 +58,11 @@ If you find a table you want in a long article, you can get select a section of 
 ![Table with Data about New York City's Boroughs from Wikipedia](nyc_boroughs.png){width=100%}
 
 ```{r}
-boroughs_section <- new_york %>% ws_get_section("Boroughs") # get the section with the id "#Boroughs"
-boroughs_section %>% ws_get_table(skip=1, header_length = 2)
+boroughs_section <- new_york %>% wiki_section("Boroughs") # get the section with the id "#Boroughs"
+boroughs_section %>% wiki_table(skip=1, header_length = 2)
 ```
 
-To get this table, we need to pass the arguments ```skip=1``` to ignore the first row that serves as a title, and ```header_length=2``` to get necessary information from both the 2nd and 3rd rows of data for our header. ```ws_get_tables``` automatically concatinates subcategories to parent categories in the header.
+To get this table, we need to pass the arguments ```skip=1``` to ignore the first row that serves as a title, and ```header_length=2``` to get necessary information from both the 2nd and 3rd rows of data for our header. ```wiki_tables``` automatically concatinates subcategories to parent categories in the header.
 
 
 
