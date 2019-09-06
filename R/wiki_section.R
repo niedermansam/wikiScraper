@@ -25,7 +25,7 @@ wiki_section <-
 
     sectionId = paste0("#",section %>% stringr::str_replace_all(" ","_"))
 
-     wiki_page(page) %>% rvest::html_nodes("table")
+    site_html <- wiki_page(page) %>% rvest::html_nodes("table")
 
      nodes <- site_html %>%
       rvest::html_nodes('h2, h3, p, table')
