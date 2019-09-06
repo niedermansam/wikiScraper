@@ -13,10 +13,10 @@
 #' @return Returns a the dataframe passed in the argument data, with columns \code{lat}
 #'     and \code{lon} appended. By default, the original \code{coordinates} column is deleted.
 #'
-#' @examples ws_get_table("List_of_metro_systems") %>% ws_tidy_names()
+#' @examples wiki_table("List_of_metro_systems") %>% wiki_names()
 #'
 #' @export
-ws_get_geometry <- function(data, delete_coords = T, coordinates){
+wiki_geometry <- function(data, delete_coords = T, coordinates){
 
   if(missing(coordinates)){
     coordinates_index <- names(data) %>% sjmisc::str_find("coords|coordinates", 1)

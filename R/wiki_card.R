@@ -8,30 +8,30 @@
 #' @param format Either 'long' or 'wide'. 'long' returns an output with two columns (header and data), 'wide' returns an output with a column for each data entry.
 #'
 #' @param delay Rate at which to throttle calls. There is no delay if the function is passed an HTML object
-#'     (e.g. from ws_get_page). Defaults to 1, can be turned off by setting
+#'     (e.g. from wiki_page). Defaults to 1, can be turned off by setting
 #'     to 0. Time between calls is determined by multiplying the value of this parameter with
 #'     the response time by the server.
 #'
 #' @return Returns a data_frame (tibble) that contains the data from a table with the class "infobox".
 #'
 #'
-#' @examples ws_get_card("wiki/New_York_City")
+#' @examples wiki_card("wiki/New_York_City")
 #'
 #'# OR
 #'# get page THEN get card
 #'
-#'page <- ws_get_page("New_York_City") # get page
-#'ws_get_card(page) # then get data from the card
+#'page <- wiki_page("New_York_City") # get page
+#'wiki_card(page) # then get data from the card
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
 #'
-#' @export ws_get_card
+#' @export wiki_card
 
-ws_get_card <-
+wiki_card <-
   function(page, format="long", delay=1){
 
-    site_html <- wikiScraper::ws_get_page(page, delay = delay) %>%
+    site_html <- wikiScraper::wiki_page(page, delay = delay) %>%
       rvest::html_nodes("table")
 
     rows <- site_html %>%

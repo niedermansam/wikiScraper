@@ -19,10 +19,10 @@
 #' @note Order of Operations: 1) replace punctuation and spaces with underscores, 2) rename,
 #'     3) replace_all, 4) remove, 5) to lowercase. This could impact the results of the function.
 #'
-#' @examples ws_get_table("List_of_metro_systems") %>% ws_tidy_names()
+#' @examples wiki_table("List_of_metro_systems") %>% wiki_names()
 #'
 #' @export
-ws_tidy_names <- function(data, replace_all=c(""), remove=NULL, rename=NULL, lowercase=TRUE){
+wiki_names <- function(data, replace_all=c(""), remove=NULL, rename=NULL, lowercase=TRUE){
 
   output_names <- names(data);
 

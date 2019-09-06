@@ -1,32 +1,32 @@
 library(wikiScraper)
 library(tidyverse)
 
-ny <- ws_get_page("New_York_City")
+ny <- wiki_page("New_York_City")
 
-ny_dem <- ny %>% ws_get_section("Demographics")
+ny_dem <- ny %>% wiki_section("Demographics")
 ny_dem %>% html_nodes("table")
 ny_dem %>%
-  ws_get_table(3, skip=1, format=c("integer", "double", "double")) %>%
-  ws_tidy_names(rename =c(3,"pct_change", 2, "population"))
+  wiki_table(3, skip=1, format=c("integer", "double", "double")) %>%
+  wiki_names(rename =c(3,"pct_change", 2, "population"))
 
 
-ny_boroughs <- ny %>% ws_get_section("Boroughs")
-ny_boroughs %>% ws_get_table(skip=1, header_length = 2)
+ny_boroughs <- ny %>% wiki_section("Boroughs")
+ny_boroughs %>% wiki_table(skip=1, header_length = 2)
 
 ny_header <- ny_boroughs %>% rvest::html_nodes("tr")
 ny_header <- ny_header[2:3]
 
-metro <- ws_get_page("List_of_metro_systems")
+metro <- wiki_page("List_of_metro_systems")
 
 metro_table <- metro %>%
-  ws_get_table(
+  wiki_table(
     format = c(
       rep("string",3),
       rep('integer', 3),
       "string",
       'double')
     ) %>%
-  ws_tidy_names()
+  wiki_names()
 
 metro_table$system_length %<>%
     str_replace_all("\\(.*\\)|km","") %>%
@@ -67,10 +67,10 @@ metro_table %>%
 
 library(leaflet)
 
-cali_power <- ws_get_page("List of power stations in California")
+cali_power <- wiki_page("List of power stations in California")
 cali_gas <- cali_power %>%
-  ws_get_table(4) %>%
-  ws_tidy_names() %>%
+  wiki_table(4) %>%
+  wiki_names() %>%
   mutate(refs = NULL,
          lat = coords %>%
            str_extract("\\d+\\.\\d+.(N|S)") %>%
@@ -93,8 +93,8 @@ leaflet() %>%
                    color = "orange")
 
 cali_gas_table <- cali_power %>%
-  ws_get_table(4) %>%
-  ws_tidy_names()
+  wiki_table(4) %>%
+  wiki_names()
 
 cali_gas$coords
 
@@ -122,18 +122,18 @@ coords %>%
 
 cali_gas %>% leaflet() %>% addTiles() %>% addMarkers(label=cali_gas$label)
 
-site_html <- ny %>% ws_get_section("Boroughs") %>% html_nodes('table')
+site_html <- ny %>% wiki_section("Boroughs") %>% html_nodes('table')
 
 bts_page <- xml2::read_html('https://www.bts.gov/statistical-products/surveys/vehicle-miles-traveled-and-vehicle-trips-state')
 
-bts <- ws_get_table(bts_page,
+bts <- wiki_table(bts_page,
                        header_start = 2,
                        header_length = 2)
 
 
-beijing <- ws_get_page('Beijing')
+beijing <- wiki_page('Beijing')
 beijing_table <- beijing %>%
-  ws_get_section('Administrative divisions') %>%
+  wiki_section('Administrative divisions') %>%
   rvest::html_nodes("table")
 beijing_table <- beijing_table[1]
 
@@ -141,7 +141,7 @@ beijing_header <- beijing_table %>% rvest::html_nodes('tr')
 beijing_header <- beijing_header[3:4]
 beijing_header
 #%>%
-  #ws_get_table(skip=2, header_length = 2)
+  #wiki_table(skip=2, header_length = 2)
 
 ny_boroughs
 

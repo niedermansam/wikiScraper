@@ -1,6 +1,6 @@
 get_table <- function(page, table = 1, header_length = "auto", skip = "auto", col_names = NULL, rm_brackets = T, rm_parens = F){
 
-  site_html <- wikiScraper::ws_get_page(page) %>% rvest::html_nodes("table")
+  site_html <- wikiScraper::wiki_page(page) %>% rvest::html_nodes("table")
 
   table <- as.numeric(table)
   if(is.na(table)){
