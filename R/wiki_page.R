@@ -29,7 +29,7 @@ wiki_page <-
       return(page)
     }
 
-    is_valid_url <- ifelse(page %>% str_detect("[:alpha:]+\\.[:alpha:]+"), T, F)
+    is_valid_url <- ifelse(page %>% stringr::str_detect("[:alpha:]+\\.[:alpha:]+"), T, F)
 
     if(is_valid_url){
       req_url <- page
